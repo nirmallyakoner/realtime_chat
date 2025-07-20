@@ -1,9 +1,10 @@
 'use client';
 
+import { use } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
 import ChatMessage from '@/components/ChatMessage';
 import MessageInput from '@/components/MessageInput';
+import { useEffect, useState } from 'react';
 
 interface Msg {
   id: string;
@@ -13,20 +14,17 @@ interface Msg {
 }
 
 interface PageProps {
-  params: {
-    room: string;
-  };
+  params: Promise<{ room: string }>;
 }
 
 export default function ChatRoom({ params }: PageProps) {
-  const room = params.room;
+  const { room } = use(params);
   const search = useSearchParams();
   const user = search.get('name') ?? 'anon';
   const router = useRouter();
 
   const [messages, setMessages] = useState<Msg[]>([]);
 
-  // Poll every second
   useEffect(() => {
     let active = true;
     async function fetchLoop() {
