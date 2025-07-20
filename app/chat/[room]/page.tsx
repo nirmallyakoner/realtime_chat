@@ -13,7 +13,13 @@ interface Msg {
   timestamp: number;
 }
 
-export default function ChatRoom({ params }: { params: { room: string } }) {
+interface PageProps {
+  params: {
+    room: string;
+  };
+}
+
+export default function ChatRoom({ params }: PageProps) {
   const room = params.room;
   const search = useSearchParams();
   const user = search.get('name') ?? 'anon';
@@ -25,9 +31,17 @@ export default function ChatRoom({ params }: { params: { room: string } }) {
   useEffect(() => {
     let active = true;
     async function fetchLoop() {
-      const res = await fetch(`/api/messages?room=${room}`);
-      if (active) setMessages(await res.json());
-      setTimeout(fetchLoop, 1000);
+      try {
+        const res = await fetch(`/api/messages?room=${room}`);
+        if (active && res.ok) {
+          setMessages(await res.json());
+        }
+      } catch (error) {
+        console.error('Failed to fetch messages:', error);
+      }
+      if (active) {
+        setTimeout(fetchLoop, 1000);
+      }
     }
     fetchLoop();
     return () => {
@@ -36,11 +50,15 @@ export default function ChatRoom({ params }: { params: { room: string } }) {
   }, [room]);
 
   async function send(text: string) {
-    await fetch('/api/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ room, user, text }),
-    });
+    try {
+      await fetch('/api/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ room, user, text }),
+      });
+    } catch (error) {
+      console.error('Failed to send message:', error);
+    }
   }
 
   return (
@@ -61,7 +79,7 @@ export default function ChatRoom({ params }: { params: { room: string } }) {
             key={m.id}
             text={m.text}
             user={m.user}
-            remaining={60 - Math.floor((Date.now() - m.timestamp) / 1000)}
+            remaining={Math.max(0, 60 - Math.floor((Date.now() - m.timestamp) / 1000))}
           />
         ))}
       </div>
@@ -70,4 +88,3 @@ export default function ChatRoom({ params }: { params: { room: string } }) {
     </main>
   );
 }
-    
