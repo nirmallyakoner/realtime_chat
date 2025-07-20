@@ -26,26 +26,26 @@ const ChatMessage: FC<Props> = ({ text, user, remaining }) => {
           border: 'none'
         }}
       >
-        <Card.Body className="p-3">
+        <Card.Body className="py-1 px-3">
           <div className="d-flex justify-content-between align-items-center">
             <Card.Subtitle 
               style={{ 
                 color: isCurrentUser ? 'rgba(255, 255, 255, 0.9)' : 'var(--text-secondary)'
               }}
             >
-              <strong>{user}</strong>
+              {/* <strong>{user}</strong> */}
             </Card.Subtitle>
-            <small 
+            {/* <small 
               style={{ 
                 color: isCurrentUser ? 'rgba(255, 255, 255, 0.7)' : 'var(--text-secondary)',
                 fontSize: '0.75rem'
               }}
             >
               {remaining}s
-            </small>
+            </small> */}
           </div>
           <Card.Text 
-            className="mt-2 mb-0" 
+            className="mb-0" 
             style={{ 
               color: isCurrentUser ? 'white' : 'var(--text-light)',
               wordBreak: 'break-word'
