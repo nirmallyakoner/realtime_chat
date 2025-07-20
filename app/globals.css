@@ -1,3 +1,79 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'bootstrap/dist/css/bootstrap.min.css';
+
+:root {
+  --primary-color: #1db954;
+  --dark-bg: #121212;
+  --dark-card-bg: #1a1a1a;
+  --dark-input-bg: #2a2a2a;
+  --text-light: #ffffff;
+  --text-secondary: #aaaaaa;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background-color: var(--dark-bg);
+  color: var(--text-light);
+}
+
+/* Custom form styling */
+.form-control:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.25rem rgba(29, 185, 84, 0.25);
+}
+
+/* Custom button hover effect */
+.btn-success:hover {
+  background-color: #19a34a !important;
+}
+
+/* Placeholder text color */
+::placeholder {
+  color: #888888 !important;
+  opacity: 1;
+}
+
+/* Typing indicator animation */
+.typing-animation {
+  display: flex;
+  align-items: center;
+}
+
+.typing-animation .dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  margin-right: 3px;
+  background-color: var(--text-secondary);
+  animation: typingAnimation 1.5s infinite ease-in-out;
+}
+
+.typing-animation .dot:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.typing-animation .dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.typing-animation .dot:nth-child(3) {
+  animation-delay: 0.4s;
+  margin-right: 0;
+}
+
+@keyframes typingAnimation {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+}
