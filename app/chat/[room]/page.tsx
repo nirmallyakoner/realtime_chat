@@ -2,7 +2,6 @@
 
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { v4 as uuid } from 'uuid';
 import ChatMessage from '@/components/ChatMessage';
 import MessageInput from '@/components/MessageInput';
 
